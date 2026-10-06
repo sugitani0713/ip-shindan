@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>あなたのIPキャラ診断｜顔出しなしYouTube向け</title>
+<meta name="description" content="占い×アンケートで、あなただけのYouTube用IPキャラクターを診断して画像で出力。無料・APIキー不要・データは端末の外に出ません。">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://sugitani0713.github.io/ip-shindan/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="あなたのIPキャラ診断">
+<meta property="og:title" content="あなたのIPキャラ診断｜顔出しなしYouTube向け（無料）">
+<meta property="og:description" content="占い×アンケートで、あなただけのYouTube用IPキャラ（ゆるキャラ／アニメ風／Vtuber風）を診断。画像とChatGPT用プロンプトまで無料で出力。">
+<meta property="og:url" content="https://sugitani0713.github.io/ip-shindan/">
+<meta property="og:image" content="https://sugitani0713.github.io/ip-shindan/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="あなたのIPキャラ診断（無料）">
+<meta name="twitter:description" content="占い×アンケートで、あなただけのYouTube用IPキャラを診断。画像とChatGPT用プロンプトまで出力。">
+<meta name="twitter:image" content="https://sugitani0713.github.io/ip-shindan/og.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%90%A3%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="top">
+  <button class="brand" id="brandBtn" type="button" aria-label="トップへ戻る"><span class="brand-dot"></span>IPキャラ診断</button>
+  <button class="link-btn" id="aboutBtn" type="button">仕組み・プライバシー</button>
+</header>
+
+<main id="app">
+  <!-- スタート -->
+  <section id="s-start" class="screen active">
+    <div class="hero">
+      <p class="eyebrow">顔出しなしYouTube × キャラクター設計</p>
+      <h1>あなたの「成功するIPキャラ」を、<br>占いとアンケートで設計します。</h1>
+      <p class="lead">姓名の音・生年月日の占い・13の質問から、<strong>ありがちなマスコットではなく、あなた本人の気質が反映された“世界に一人だけ”のキャラ</strong>を画像で出力。YouTubeでの勝ち筋と、画像生成AIに渡せるプロンプトまで一緒にお渡しします。</p>
+      <ul class="points">
+        <li><b>無料</b><span>登録なし・課金なし</span></li>
+        <li><b>APIキー不要</b><span>ブラウザだけで完結</span></li>
+        <li><b>データは端末内</b><span>入力内容は送信しません</span></li>
+      </ul>
+      <button class="btn primary big" id="startBtn" type="button">診断をはじめる（約3分）</button>
+      <p class="fine">占いはエンターテインメントです。診断結果は「続けやすく、覚えられやすい設計」の材料であり、成功を保証するものではありません。</p>
+    </div>
+  </section>
+
+  <!-- プロフィール -->
+  <section id="s-profile" class="screen">
+    <div class="panel">
+      <p class="step">STEP 1 / 3　占いの材料（どちらも任意）</p>
+      <h2>お名前と生年月日を教えてください</h2>
+      <p class="muted">入力すると、名前の“音”と生年月日の占い（日干・星座・数秘・九星）が、キャラの性格・口調・色・名前に反映されます。空欄でもアンケートだけで診断できます。</p>
+      <label class="field"><span>名前の読み（ニックネーム可・ひらがな／カタカナ）</span>
+        <input id="inName" type="text" maxlength="20" placeholder="例：さくら" autocomplete="off"></label>
+      <label class="field"><span>生年月日</span>
+        <input id="inBirth" type="date" min="1920-01-01" max="2015-12-31"></label>
+      <div class="field"><span>キャラの系統（結果画面であとから切り替えられます）</span>
+        <div class="seg" id="segKind" role="group" aria-label="キャラの系統">
+          <button type="button" data-k="auto" class="on">おまかせ</button><button type="button" data-k="mascot">ゆるキャラ</button>
+          <button type="button" data-k="anime">アニメキャラ風</button><button type="button" data-k="vtuber">Vtuber風</button></div></div>
+      <div class="field"><span>キャラの性別（アニメ・Vtuberの場合。自分と違う性別の架空キャラもOK）</span>
+        <div class="seg" id="segGender" role="group" aria-label="キャラの性別">
+          <button type="button" data-g="n" class="on">おまかせ</button><button type="button" data-g="f">女性（美少女系）</button>
+          <button type="button" data-g="m">男性（美少年・イケメン系）</button></div></div>
+      <p class="fine" id="profileMsg" role="status"></p>
+      <div class="row">
+        <button class="btn ghost" id="profBack" type="button">戻る</button>
+        <button class="btn primary" id="profNext" type="button">次へ（アンケート）</button>
+      </div>
+      <button class="link-btn center" id="skipDiv" type="button">占いは使わず、アンケートだけで診断する</button>
+    </div>
+  </section>
+
+  <!-- アンケート -->
+  <section id="s-quiz" class="screen">
+    <div class="panel">
+      <div class="progress" aria-hidden="true"><i id="progBar"></i></div>
+      <p class="step" id="quizStep"></p>
+      <h2 id="quizQ"></h2>
+      <p class="muted" id="quizHint"></p>
+      <div id="quizOpts" class="opts"></div>
+      <div class="row">
+        <button class="btn ghost" id="quizBack" type="button">戻る</button>
+        <button class="btn primary" id="quizNext" type="button" disabled>次へ</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 自由記述 -->
+  <section id="s-free" class="screen">
+    <div class="panel">
+      <p class="step">STEP 3 / 3　あなただけの一滴（任意）</p>
+      <h2>最後に、あなたのことを少しだけ</h2>
+      <p class="muted">ここに書いた言葉は、そのままキャラの「設定」や「決め台詞」の材料になります。書くほど“あなただけ”に近づきます。</p>
+      <label class="field"><span>人から言われがちな一言（例：話しやすいね／なんか不思議）</span><input id="fSaid" maxlength="40" type="text"></label>
+      <label class="field"><span>最近ハマっていること・好きなもの</span><input id="fLove" maxlength="40" type="text" placeholder="例：古い喫茶店めぐり"></label>
+      <label class="field"><span>これだけは譲れないこだわり</span><input id="fVow" maxlength="40" type="text" placeholder="例：嘘の情報は流さない"></label>
+      <div class="row">
+        <button class="btn ghost" id="freeBack" type="button">戻る</button>
+        <button class="btn primary big" id="freeGo" type="button">キャラを診断する</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ローディング -->
+  <section id="s-loading" class="screen">
+    <div class="panel center-box">
+      <div class="spinner" aria-hidden="true"></div>
+      <p id="loadMsg" class="load-msg" role="status">診断中…</p>
+    </div>
+  </section>
+
+  <!-- 結果 -->
+  <section id="s-result" class="screen">
+    <div id="result"></div>
+  </section>
+</main>
+
+<dialog id="aboutDlg">
+  <h3>仕組みとプライバシー</h3>
+  <p><b>このアプリは、あなたの入力を一切送信しません。</b>診断・描画・画像書き出しはすべてブラウザの中で行われ、AI画像生成サービスやAPIキーは使っていません。</p>
+  <p><b>どうやって“世界に一人だけ”にしているの？</b><br>
+  ① 13問のアンケートから気質を5軸（温度・動き・笑い・個性・深さ）で数値化<br>
+  ② 名前の母音・音の質感、日干（算命学）・太陽星座・数秘術・九星気学で気質に傾きを加える<br>
+  ③ 原型(13種)・ギャップ設定・口調・名前を決め、約10億通り以上の部品の組み合わせ（ゆるキャラ／アニメ風の美少女・イケメン／Vtuber風）から、あなたの気質に合う見た目を選ぶ<br>
+  ④ あなたが書いた言葉を、キャラの設定に編み込む</p>
+  <p class="muted">占いはエンターテインメントです。診断結果は成功を保証するものではなく、「続けやすく覚えられやすい」キャラクター設計の材料です。</p>
+  <form method="dialog"><button class="btn primary" type="submit">閉じる</button></form>
+</dialog>
+
+<footer class="foot">
+  <p>無料で公開しています。ご自由にSNSでシェアしてください。</p>
+</footer>
+
+<script src="js/util.js"></script>
+<script src="js/divination.js"></script>
+<script src="js/data.js"></script>
+<script src="js/draw.js"></script>
+<script src="js/human.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/export.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
