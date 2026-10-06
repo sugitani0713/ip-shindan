@@ -139,8 +139,10 @@
     $('#result').innerHTML = `
 <div class="res-hero" style="--bg1:${spec.colors.bg[0]};--bg2:${spec.colors.bg[1]}">
   <div class="score-badge"><small>IP設計度</small><b>${P.score.total}</b></div>
+  <h2 class="dir-title">キャラの方向性</h2>
+  <p class="dir-note">これは<b>完成形ではなく、画像の元（設計図）</b>です。下の「ChatGPTで美麗な決定版に仕上げる」で、同じ方向性のまま描き込んだ最終画像を作れます。</p>
   <div class="hero-char" id="heroChar">${svg}</div>
-  <p class="eyebrow">あなたのためだけのIPキャラ</p>
+  <p class="eyebrow">診断された、あなたのIPキャラ</p>
   <h2 class="cname">${E(t.n)}</h2>
   <p class="ctag">${E(t.tagline)}</p>
   <div class="chips">${chips.map(c => `<span>${E(c)}</span>`).join('')}</div>

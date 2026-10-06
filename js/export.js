@@ -26,14 +26,14 @@ const Exporter = (() => {
   <rect width="${W}" height="${H}" fill="url(#bg)"/>
   <circle cx="540" cy="560" r="400" fill="#fff" opacity=".55"/>
   <circle cx="170" cy="190" r="70" fill="${C.accent}" opacity=".22"/><circle cx="930" cy="330" r="44" fill="${C.accent}" opacity=".28"/><circle cx="900" cy="860" r="96" fill="${C.body}" opacity=".2"/>
-  <text x="540" y="92" text-anchor="middle" font-size="26" font-weight="700" letter-spacing="8" fill="#5b5380">YOUR  IP  CHARACTER</text>
-  <text x="540" y="136" text-anchor="middle" font-size="30" font-weight="800" fill="#3a3358">あなたのためだけの、IPキャラ</text>
+  <text x="540" y="92" text-anchor="middle" font-size="26" font-weight="700" letter-spacing="8" fill="#5b5380">CHARACTER  DIRECTION</text>
+  <text x="540" y="136" text-anchor="middle" font-size="30" font-weight="800" fill="#3a3358">キャラの方向性</text>
   <g transform="translate(222 150) scale(1.65)">${g}</g>
   <g transform="translate(900 120)"><circle r="72" fill="#fff" opacity=".92"/><text y="-8" text-anchor="middle" font-size="22" font-weight="700" fill="#6a6290">IP設計度</text><text y="42" text-anchor="middle" font-size="56" font-weight="900" fill="#3a3358">${P.score.total}</text></g>
   <text x="540" y="1040" text-anchor="middle" font-size="${nameSize}" font-weight="900" fill="#2b2540">${E(t.n)}</text>
   ${tagSvg}
   ${chipSvg}
-  <text x="540" y="1300" text-anchor="middle" font-size="22" fill="#5b5380" opacity=".85">占い × アンケートで設計・世界に一人だけのYouTube用IPキャラ</text>
+  <text x="540" y="1300" text-anchor="middle" font-size="22" fill="#5b5380" opacity=".85">これは完成形ではなく「画像の元（設計図）」です。ChatGPTで仕上げられます</text>
 </svg>`;
   }
 

@@ -127,3 +127,13 @@ dialog h3{margin-top:0}
 .fu{border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin:8px 0;background:var(--bg)}
 .fu summary{cursor:pointer;display:flex;flex-direction:column;gap:2px}.fu summary span{font-size:12.5px;color:var(--muted)}
 .fu textarea{margin-top:10px}
+
+.dir-title{margin:2px 0 4px;font-size:clamp(20px,5vw,26px);letter-spacing:.06em;padding-right:96px;text-align:left}
+.dir-note{margin:0 0 6px;font-size:13.5px;line-height:1.7;color:#3a3358;background:rgba(255,255,255,.7);border-radius:12px;padding:8px 12px;text-align:left}
+.dir-note b{color:#5b4bdb}
+@media (min-width:640px){.dir-title,.dir-note{text-align:center;padding-right:0}.dir-note{max-width:520px;margin:0 auto 6px}}
+
+.score-badge{width:68px!important;height:68px!important;top:12px!important;right:12px!important}.score-badge b{font-size:24px}.score-badge small{font-size:10px}
+.dir-title{padding-right:84px}.dir-note{margin-right:0}
+.dir-note{margin-top:34px}
+@media (min-width:640px){.dir-note{margin-top:0}.score-badge{width:84px!important;height:84px!important}.score-badge b{font-size:30px}.score-badge small{font-size:11px}}
